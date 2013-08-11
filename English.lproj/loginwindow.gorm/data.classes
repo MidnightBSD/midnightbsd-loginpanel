@@ -1,0 +1,48 @@
+{
+    "## Comment" = "Do NOT change this file, Gorm maintains it";
+    FirstResponder = {
+	Actions = (
+	    "usernameEntered:",
+	    "passwordEntered:",
+	    "powerButton:",
+	    "restartButton:",
+	    "showInfo:"
+	);
+	Super = NSObject;
+    };
+    LoginApplication = {
+	Actions = (
+	);
+	Outlets = (
+	);
+	Super = NSApplication;
+    };
+    LoginPanelController = {
+	Actions = (
+	    "usernameEntered:",
+	    "passwordEntered:",
+	    "powerButton:",
+	    "restartButton:",
+	    "showInfo:"
+	);
+	Outlets = (
+	    usernameField,
+	    passwordField,
+	    window
+	);
+	Super = NSObject;
+    };
+    LoginWindow = {
+	Actions = (
+	);
+	Outlets = (
+	    hostnameText,
+	    loginImageView,
+	    passwordText,
+	    powerButton,
+	    restartButton,
+	    usernameText
+	);
+	Super = NSWindow;
+    };
+}

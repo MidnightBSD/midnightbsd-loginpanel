@@ -1,0 +1,88 @@
+2013-05-31 Riccardo Mottola <rm@gnu.org>
+
+	* GNUmakefile
+	* LoginPanelController.h
+	* LoginPanelController.m
+	* loginpanel_main.m
+	Partial revert: don't start X, but try to kill all connected cliens later. Works only partially though.
+
+2013-05-23 Riccardo Mottola <rm@gnu.org>
+
+	* LoginPanelController.h
+	* LoginPanelController.m
+	Rename initialize to initializeInterface to avoid confusion.
+
+2013-05-29 Riccardo Mottola <rm@gnu.org>
+
+	* Authenticator.h
+	* Authenticator.m
+	* LoginPanelController.h
+	* LoginPanelController.m
+	Move session start to the controller. Give the authenticator a password entity accessor.
+
+2013-05-25: Sebastian Reitenbach <sebastia@l00-bugdead-prods.de>
+	* loginpaneld.m
+	  call waitpid() correctly
+	  call loginpanel with -GSX11HandlesWindowDecorations NO
+
+2013-05-22: Sebastian Reitenbach <sebastia@l00-bugdead-prods.de>
+	* XServerManager.[h|m]
+	  added singleton class, responsible to spawn/kill the X server
+	* GNUmakefile
+	  compile new class above
+	* loginpanel_main.m
+	  remove the startXServer function, and make use of the
+	  XServerManager class
+	* Authenticator.m
+	  use the XServerManager class to shut down the XServer
+	* XServerManager.[h|m]
+	  add more functionality
+        * GNUmakefile.preamble
+          ADDITIONAL_INCLUDE_DIRS and ADDITIONAL_LDFLAGS, to link 
+          against libX11, and include X11/xlib.h
+	* add loginpaneld.m, implementing a deamon restarting the
+	  login panel when it dies
+	* GNUmakefile, build loginpaneld
+
+2013-05-21 Riccardo Mottola <rm@gnu.org>
+
+	* Authenticator.m
+	Fix last stat case, do not pass a NULL argument to stat or linux complains.
+
+2013-05-21: Sebastian Reitenbach <sebastia@l00-bugdead-prods.de>
+	* GNUmakefile.preamble, Authenticator.m
+	  rename have-bsd-auth to have-openbsd-auth
+
+2013-05-20: Sebastian Reitenbach <sebastia@l00-bugdead-prods.de>
+	* GNUmakefile.preamble
+	  add compilation parameter: have-bsd-auth
+	* if HAVE_BSD_AUTH, then use auth_userokay to figure
+	  out whether the username/password is correct
+	* LoginPanelController.m
+	  make the power button work on OpenBSD
+	* English.lproj/InfoPanel.gorm
+	  make the InfoPanel look a little bit more nice
+	* Authenticator.m
+	  try harder to find apropriate script to be run after
+	  login, in the following order: 
+	  ~.xsession, ~.xinitrc, /etc/X11/xinit/xinitrc, 
+	  /etc/X11/xdm/Xsession
+	* LoginPanelController.m, Authenticator.m
+	  do not print the password
+
+2013-03-11: Sebastian Reitenbach <sebastia@l00-bugdead-prods.de>
+	* Authenticator.[h|m]
+	  fix header inclusion for pam, and use setpgid() instead
+	  of setpgrp()
+	* LoginPanelController.m
+	  verified variable only necessary when HAVE_PAM
+	* LoginWindow.m
+	  unsigned int -> NSUInteger
+	* loginpanel_main.m
+	  include missing header
+	* GNUmakefile.preamble
+	  add parameter have-pam, set it to yes, when you
+	  want to use pam for authentication, and do not link
+	  against -lcrypto on OpenBSD
+	* README
+	  add note about have-pam
