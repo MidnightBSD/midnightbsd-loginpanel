@@ -30,18 +30,21 @@
 
 #import <AppKit/AppKit.h>
 
-#ifdef HAVE_PAM
-#include <security/pam_appl.h>
-#else
 #include <pwd.h>
-#endif
+#include <security/pam_appl.h>
+#include <security/openpam.h>
 
 @interface Authenticator : NSObject
 {
     NSString *username;
     NSString *password;
-#ifdef HAVE_PAM
+#if defined(HAVE_PAM) || defined(__MidnightBSD_version)
     pam_handle_t *handle;
+    struct pam_conv pamc;
+    int pam_err;
+    int pam_silent;
+    int pam_cred_established;
+    int pam_session_established;
 #endif
     struct passwd *pw;
     NSString *passwordFilePath;
@@ -55,5 +58,10 @@
 - (BOOL)isPasswordCorrect;
 - (void)setEnvironment;
 - (struct passwd *)getPasswordEntity;
+#if defined(HAVE_PAM) || defined(__MidnightBSD_version)
+- (void)pamSyslog: (NSString *)message;
+- (void)pamCleanup;
+- (int) pamAuth;
+#endif
 
 @end

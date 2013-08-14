@@ -18,7 +18,7 @@ ADDITIONAL_LDFLAGS +=
 ADDITIONAL_INCLUDE_DIRS += -I/usr/local/include
 
 # Additional library directories the linker should search
-ADDITIONAL_LIB_DIRS += -L/usr/local/lib -lX11
+ADDITIONAL_LIB_DIRS += -L/usr/local/lib -lX11 -lpam
 
 # Additional GUI libraries to link
 ifneq ($(findstring openbsd, $(GNUSTEP_TARGET_OS)), openbsd)
@@ -27,7 +27,12 @@ endif
 
 ifeq ($(findstring midnightbsd, $(GNUSTEP_TARGET_OS)), midnightbsd)
 ADDITIONAL_CPPFLAGS += -DHAVE_PAM=1
-ADDITIONAL_GUI_LIBS += -lutil
+ADDITIONAL_GUI_LIBS += -lutil -lpam
+endif
+
+ifeq ($(findstring midnightbsd, $(GNUSTEP_TARGET_OS)), freebsd)
+ADDITIONAL_CPPFLAGS += -DHAVE_PAM=1
+ADDITIONAL_GUI_LIBS += -lutil -lpam
 endif
 
 ifeq ($(have-pam), yes)
