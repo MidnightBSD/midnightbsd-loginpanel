@@ -30,7 +30,7 @@
 #include <X11/Xlib.h>
 
 #ifndef DEFAULT_XSERVER
-#define DEFAULT_XSERVER {"/usr/X11R6/bin/X", NULL}
+#define DEFAULT_XSERVER {"/usr/local/bin/X", NULL}
 #endif
 
 @interface XServerManager : NSObject
